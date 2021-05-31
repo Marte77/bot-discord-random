@@ -1,0 +1,13 @@
+{
+	"prefix": "😡",
+	"token": "NTg",
+	"TWITTER_CONSUMER_KEY": "Cy",
+	"TWITTER_CONSUMER_SECRET": "8",
+	"TWITTER_BEARER_TOKEN":"AA",
+	"TWITTER_ACCESS_TOKEN_KEY": "26",
+	"TWITTER_ACCESS_TOKEN_SECRET": "r",
+	"YOUTUBE_API_KEY" : "AI",
+	"client_idGOOGLE":"9",
+	"client_secretGOOGLE":"w",
+	"redirect_urisGOOGLE":"http://martinhotm.dynip.sapo.pt/"
+}

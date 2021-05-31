@@ -1,0 +1,25 @@
+{
+  "name": "totil_bot",
+  "version": "0.0.0",
+  "description": "bot epicamente epico de test",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "146315197768925184",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "googleapis": "^67.0.0",
+    "lua": "0.0.1",
+    "node-fetch": "^2.6.1",
+    "pm2": "^4.5.1",
+    "python-shell": "^2.0.3",
+    "random-puppy": "^1.1.0",
+    "reddit": "^1.2.1",
+    "sequelize": "^6.6.2",
+    "snekfetch": "^4.0.4",
+    "twit": "^2.2.11",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
