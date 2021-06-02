@@ -14,18 +14,19 @@ const { google, GoogleApis } =  require('googleapis')
 
 const googleAuth = new google.auth.OAuth2(client_idGOOGLE,client_secretGOOGLE,redirect_urisGOOGLE);
 
+const utilizadores = require('./sequelize.js')
 
 const youtube = google.youtube({
     version:'v3',
     auth: YOUTUBE_API_KEY
 })
-
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const { firebasedynamiclinks } = require('googleapis/build/src/apis/firebasedynamiclinks');
 myBot.once('ready', () =>{
     console.log('I am ready!\n');
     //console.log(myBot.user);
     myBot.user.setActivity('com a tua mae 😈', { type: 'PLAYING' })
+    
 });
 
 //TODO: FAZER A LISTAGEM DE TODAS AS SUBSCRICOES!!!! ESTA UMA PARTE JA MEIA FEITA NO NOTEPAD++
@@ -144,7 +145,7 @@ async function musicastxt(){ //"musicastxt"
 }
 
 var jaEnviouAntes=false;
-myBot.on('message',message =>{
+myBot.on('message',async function(message){
     /* spammar
     var mensagem = message.content;
     mensagem.toLowerCase();
@@ -169,6 +170,56 @@ myBot.on('message',message =>{
     if(mensagem === "musicastxt"){
         musicastxt()
         return
+    }
+    
+    if(mensagem.startsWith(`${prefix}testedb`) ||mensagem.startsWith(`${prefix} testedb`)){
+        let arr = await utilizadores.verUtilizadores();
+        for(let a = 0; a < arr.length; a++)
+        { 
+            let me = 'Id: ' + arr[a].id + '; NomeUtilizador: ' + arr[a].nomeUtil + '; Password: ' + arr[a].password + '; dataCriacao utilizador: ' + arr[a].dataCriacao  
+            message.channel.send(me)
+        }
+    }
+
+    if(mensagem.startsWith(`${prefix}respondetwt`) ||mensagem.startsWith(`${prefix} respondetwt`)){
+        let tweet = mensagem;
+        let sim = mensagem.startsWith(`${prefix}respondetwt`)
+        if(mensagem.length == `${prefix}respondetwt`.length || mensagem.length == `${prefix} respondetwt`.length )
+            {message.channel.send("falta o link do tweet");return;}
+        if(sim){
+            tweet = mensagem.toString().substring(15);
+        }else{
+            tweet = mensagem.toString().substring(16);
+        }
+        //aqui tem o link do tweet
+            //todo: meter para dar respostas customizaveis
+        let conteudotweet = "🌈"
+        console.log(tweet.split('/'))
+        tweet = tweet.split('/')
+        let params={status:'@'+tweet[3] + ' ' +conteudotweet,in_reply_to_status_id:tweet[5]}
+        console.log(params)
+        Twitterclient.post('statuses/update',params,function(err,data, res){
+            //console.log(err)
+            console.log(data)
+            //console.log(res)
+        })
+
+        /*Twitterclient.post('statuses/update', { status: conteudotweet, in_reply_to_status_id:"@ilikeverypeidos/" }, function(err, datatweet, responsetwitter) {
+            if(err)
+            {
+                message.channel.send(err);
+            }
+            else{
+                var params = {screen_name: 'ilikeverypeidos', count: 1};
+                Twitterclient.get('statuses/user_timeline', params, function(error, tweets, response) {
+                    if (!error) {
+                        var tweetLink = tweets[0].source.toString().split('"');
+                        message.channel.send(tweetLink[1]+"status/"+tweets[0].id_str);
+                    }
+                });
+            }
+        });*/
+
     }
 
     if(mensagem.startsWith(`${prefix}allsubs`) ||mensagem.startsWith(`${prefix} allsubs`)){
